@@ -1,0 +1,7 @@
+             min     max    moyenne  médianne
+friends        0     56K        442       185
+followers      0    327K       2.1K       113
+tweets         0     29K       2.6K      1.4K
+
+Comptes avec >5000 friends : 43
+Comptes avec ≤5000 friends : 9.4K

@@ -1,0 +1,32 @@
+﻿29/03/2012
+----------
+
+1. On prend une URL (« spread »), et on récupère tous les tweets qui citent cette URL. Ensuite, on récupère tous les auteurs de ces tweets, et tous leurs tweets.
+2. On analyse les interactions (retweets et mentions) entre utilisateurs *avant* le spread (i.e. avant le tweet qui cite l'URL donnée).
+3. On représente l'activité autour de cette URL avec les retweets qui la mentionnent. On remarque des graphes en étoile avec un utilisateur qui cite cette URL, et un certain nombre qui le retweet. Une bonne moitié du graphe représente des utilisateurs isolés qui ont tweeté l'URL.
+4. On collecte les informations de suivi (following/followers) *après* le spread, et on essaye de déterminer l'impact des tweets « originels » (i.e. les tweets qui ont déclenchés des retweets) sur les nouvelles relations (ma tâche).    Par exemple, soit trois utilisateurs *A*, *B*, *C*. *A* suit *B* qui suit *C*. *B* retweet *C*, *puis* *A* retweet *C*. On peut supposer que *A* a retweeté *C* suite au retweet de *B*. Ensuite, si *A* se met à suivre *C*, on pourra supposer que c'est suite au retweet via *B*.
+
+- G0: Premier graphe (avant/pendant le spread)
+- Gf: Second graphe (après le spread)
+
+05/04/2012
+----------
+
+- Objectif: récupérer le graphe des followers et essayer de voir le lien entre les "follows" et les RT. Cf `followers/ids`, `friends/ids`, `users/lookup`.
+- Faire fichier de stats avec pour chaque graphe le nb d' users/liens
+- Faire un cache id/nom/followers/follows global
+- Comparer graphe des followers avec G0 (regarder l'intersection des graphes, recouvrement des liens, etc)
+- Pour chaque graphe, calculer pourcentage de recouvrement (liens communs) entre G(followers) et G0, Gf.
+- Garder l'ordre de la liste followers/follows (ordre d'ancienneté) -> attribut de lien
+- attributs de noeuds : date d'extraction des followers/follows
+
+16/04/2012
+----------
+
+- Pour chaque graphe, récupérer nb noeuds / nb liens / 2+ grands degrés
+
+17/04/2012
+----------
+
+- Pour chaque paire G0/Gf, calculer le pourcentage de recouvrement (par rapport
+  à G0 __et__ Gf)

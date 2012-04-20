@@ -1,0 +1,10 @@
+*~
+*.json
+*.gephi
+*.gdf
+*.search
+*.tgz
+*.txz
+*.tar
+*.pdf
+.tmp
