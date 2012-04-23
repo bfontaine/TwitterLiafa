@@ -37,7 +37,7 @@
 - Générer un .csv avec les colonnes suivantes:
     - numéro du graph                                         (0)
     - nombre de noeuds                                        (1)
-    - valeur du plus haut degré de Gf                         (d)
+    [- valeur du plus haut degré de Gf                         (d)]
     - nombre de liens dans G0                                 (2)
     - nombre de liens dans Gf                                 (3)
     - nombre de liens dans G0&Gf (intersection)               (4)
@@ -48,3 +48,7 @@
 
 - Générer les graphs combinés G0+Gf (ajouter les attributs `G0` (est dans G0),
   `Gf` (idem), et `G0Gf` (est dans les deux)).
+
+- Faire un tableau à 2 dimensions, avec pour chaque paire de graphes,
+  l'intersection des noeuds de chacun (but: trouver les utilisateurs qui
+  reviennent souvent).
