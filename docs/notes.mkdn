@@ -44,6 +44,7 @@
     - ((4) / (2))                                             (5)
     - ((4) / (3))                                             (6)
     - (6) en supprimant les noeuds inactifs de Gf (≥5 tweets) (7)
+    - idem que 7, mais avec 10 tweets                         (8)
 
 - Générer les graphs combinés G0+Gf (ajouter les attributs `G0` (est dans G0),
-  `Gf` (idem), et `G0Gf` (est dans les deux))
+  `Gf` (idem), et `G0Gf` (est dans les deux)).
