@@ -51,4 +51,5 @@
 
 - Faire un tableau à 2 dimensions, avec pour chaque paire de graphes,
   l'intersection des noeuds de chacun (but: trouver les utilisateurs qui
-  reviennent souvent).
+  reviennent souvent) -> on peut faire un tableau juste pour voir les tailles,
+  en utilisant des couleurs.
