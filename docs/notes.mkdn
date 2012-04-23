@@ -7,7 +7,7 @@
 4. On collecte les informations de suivi (following/followers) *après* le spread, et on essaye de déterminer l'impact des tweets « originels » (i.e. les tweets qui ont déclenchés des retweets) sur les nouvelles relations (ma tâche).    Par exemple, soit trois utilisateurs *A*, *B*, *C*. *A* suit *B* qui suit *C*. *B* retweet *C*, *puis* *A* retweet *C*. On peut supposer que *A* a retweeté *C* suite au retweet de *B*. Ensuite, si *A* se met à suivre *C*, on pourra supposer que c'est suite au retweet via *B*.
 
 - G0: Premier graphe (avant/pendant le spread)
-- Gf: Second graphe (après le spread)
+- Gf: Graph des followers
 
 05/04/2012
 ----------
@@ -16,7 +16,7 @@
 - Faire fichier de stats avec pour chaque graphe le nb d' users/liens
 - Faire un cache id/nom/followers/follows global
 - Comparer graphe des followers avec G0 (regarder l'intersection des graphes, recouvrement des liens, etc)
-- Pour chaque graphe, calculer pourcentage de recouvrement (liens communs) entre G(followers) et G0, Gf.
+- Pour chaque graphe, calculer pourcentage de recouvrement (liens communs) entre Gf et G0.
 - Garder l'ordre de la liste followers/follows (ordre d'ancienneté) -> attribut de lien
 - attributs de noeuds : date d'extraction des followers/follows
 
@@ -30,3 +30,20 @@
 
 - Pour chaque paire G0/Gf, calculer le pourcentage de recouvrement (par rapport
   à G0 __et__ Gf)
+
+23/04/2012
+----------
+
+- Générer un .csv avec les colonnes suivantes:
+    - numéro du graph                                         (0)
+    - nombre de noeuds                                        (1)
+    - valeur du plus haut degré de Gf                         (d)
+    - nombre de liens dans G0                                 (2)
+    - nombre de liens dans Gf                                 (3)
+    - nombre de liens dans G0&Gf (intersection)               (4)
+    - ((4) / (2))                                             (5)
+    - ((4) / (3))                                             (6)
+    - (6) en supprimant les noeuds inactifs de Gf (≥5 tweets) (7)
+
+- Générer les graphs combinés G0+Gf (ajouter les attributs `G0` (est dans G0),
+  `Gf` (idem), et `G0Gf` (est dans les deux))
