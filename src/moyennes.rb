@@ -1,6 +1,7 @@
 #! /usr/bin/ruby1.9.1
 
-require '/home/baptiste/Documents/Programmation/Github/Graph.rb/gdf'
+require 'graphe'
+require 'graphs/gdf'
 
 GRAPHS_DIR = '../../donnees_2012-02-28/*.gdf'
 

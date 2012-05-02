@@ -1,6 +1,7 @@
 #! /usr/bin/ruby1.9.1
 
-require '../../../../Programmation/Github/Graph.rb/gdf'
+require 'graph'
+require 'graphs/gdf'
 
 lines = []
 

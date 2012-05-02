@@ -1,7 +1,8 @@
 #! /usr/bin/ruby1.9.1
 # -*- coding: utf-8 -*-
 
-require '../../../../Programmation/Github/Graph.rb/gdf'
+require 'graph'
+require 'graphs/gdf'
 
 Root_dir = '../..'
 

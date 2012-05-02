@@ -1,7 +1,7 @@
 #! /usr/bin/ruby1.9.1
 
-require '../../../../Programmation/Github/Graph.rb/lib/graph'
-require '../../../../Programmation/Github/Graph.rb/lib/graphs/gdf'
+require 'graph'
+require 'graphs/gdf'
 
 ('001'..'124').each { |n|
 
