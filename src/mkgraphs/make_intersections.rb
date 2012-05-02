@@ -1,6 +1,7 @@
 #! /usr/bin/ruby1.9.1
 
-require '../../../../Programmation/Github/Graph.rb/gdf'
+require '../../../../Programmation/Github/Graph.rb/lib/graph'
+require '../../../../Programmation/Github/Graph.rb/lib/graphs/gdf'
 
 ('001'..'124').each { |n|
 
@@ -36,7 +37,7 @@ require '../../../../Programmation/Github/Graph.rb/gdf'
         e
     }
 
-    gi.edges = GDF::Graph::EdgeArray.new(edges)
+    gi.edges = Graph::EdgeArray.new(edges)
 
     gi.write("../../graphs/intersections/#{n}_intersection.gdf")
 }

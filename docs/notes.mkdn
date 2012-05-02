@@ -53,3 +53,24 @@
   l'intersection des noeuds de chacun (but: trouver les utilisateurs qui
   reviennent souvent) -> on peut faire un tableau juste pour voir les tailles,
   en utilisant des couleurs.
+
+30/04/2012
+----------
+
+- Gx = G0&RT (les RT issus de gens qui suivent l'auteur du tweet d'origine)
+- Il faut trouver les liens Gf&RT&~G0, i.e. les liens avec A et B où A n'a pas
+  interagi avec B (G0), mais A suit B (Gf) et A a RT B
+- Voir dans le JSON les personnes qui ont été RTées
+- G'f = { u→v dans Gf tq il existe x→v dans GRT }
+- GRT = graph des RT
+- I = G0&Gf, intersection de G0 et Gf
+- I' = G0&G'f, intersection de G0 et G'f
+- `XXX_interactions.json` : liste des tweets qui mentionnent l'URL (tweets+RT)
+- Voir avec `XXX_interactions.json` les gens qui ont tweeté l'URL après que l'un
+  de leurs followings ai tweeté l'URL.
+- TODO créer le GRT avec `XXX_interactions.json`, et calculer les intersections
+  GRT&G0, GRT&Gf, et GRT&G0&Gf (avec à chaque fois le pourcentage de
+  recouvrement par rapport à GRT). Mettre les résultats dans un CSV avec les
+  autres, + créer des courbes pour la visualisation.
+- Écrire le rapport de stage/présentation la semaine du 14-20
+- RDV 11h 7 mai
