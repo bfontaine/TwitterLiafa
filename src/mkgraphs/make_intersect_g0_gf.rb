@@ -12,7 +12,7 @@ require 'graphs/gdf'
         {'node1'=>e['node1'], 'node2'=>e['node2']}
     }
 
-    gi = GDF::Graph.new(g0.nodes)
+    gi = Graph.new(g0.nodes)
 
     edges = g0.edges | gf.edges
 
@@ -39,5 +39,5 @@ require 'graphs/gdf'
 
     gi.edges = Graph::EdgeArray.new(edges)
 
-    gi.write("../../graphs/intersections/#{n}_intersection.gdf")
+    gi.write("../../graphs/intersections/g0-gf/#{n}_intersection_g0_gf.gdf")
 }
