@@ -5,5 +5,5 @@ rapport : rapport.pdf
 	evince rapport.pdf &
 
 rapport.pdf: rapport.md
-	pandoc rapport.md -o rapport.pdf
+	pandoc --smart --normalize --standalone rapport.md -o rapport.pdf
 
