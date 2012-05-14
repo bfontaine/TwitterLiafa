@@ -74,3 +74,28 @@
   autres, + créer des courbes pour la visualisation.
 - Écrire le rapport de stage/présentation la semaine du 14-20
 - RDV 11h 7 mai
+
+07/05/2012
+----------
+
+- Mettre l'URL du spread dans le CSV (ou domaine + le texte du premier tweet)
+- Pour chaque RT par ordre chronologique (A a RTé B), voir: 1) si A a interragi
+  avec B (si A->B est dans G0), 2) si un voisin de A (lien sortant dans G0) a
+  déjà RTé B avant.
+- Refaire la même chose en changeant G0 par Gf.
+- Exemple de sortie: GDF avec un attribut sur les liens correspondant à comment
+  ce RT est expliqué
+- Sortir un CSV avec pour chaque graph combien de % de RTs sont expliqués par un
+  voisin dans G0, par un voisin dans Gf (% par rapport au nb de RT total)
+- "soutenance" le 22 mai à 15h30 (sera peut-être avancé à 14h): faire un
+  document et une présentation (~15min): présenter Twitter, comment ça marche,
+  quelques aspects techniques (mais pas trop), l'API Twitter, les techniques
+  utilisées (Ruby, etc).
+
+14/05/2012
+----------
+
+- La recherche d'explications sur G0, voisins de G0, Gf et voisins de Gf doit
+  être indépendante à chaque fois (ex: ça peut être expliqué par G0 **et** par
+  un voisinage dans G0).
+
