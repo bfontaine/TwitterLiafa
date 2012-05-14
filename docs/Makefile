@@ -1,9 +1,13 @@
 # Makefile for pandoc compiling
 # v0.1
 
+PANDOC_OPTS=--smart --normalize --standalone
+
 rapport : rapport.pdf
 	evince rapport.pdf &
 
-rapport.pdf: rapport.md
-	pandoc --smart --normalize --standalone rapport.md -o rapport.pdf
+rapport.md:
+	# to prevent circular dependencies
 
+rapport.%: rapport.md
+	pandoc ${PANDOC_OPTS} $< -o $@
