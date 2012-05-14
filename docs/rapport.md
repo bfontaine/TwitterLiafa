@@ -83,4 +83,20 @@ Mes objectifs étaient les suivants :
 Méthodologie
 ============
 
-Durant tout le stage, j'ai utilisé des scripts en **Ruby** pour 
+Durant tout le stage, j'ai utilisé des scripts en **Ruby** pour automatiser les
+tâches répétitives et/ou trop longues à faire à la main. J'ai aussi utilisé le
+logiciel [Gephi](https://gephi.org) pour visualiser les graphes.
+
+Technique
+---------
+
+Afin de représenter des graphes simplement, j'ai utilisé des listes de
+*hashs*^[équivalent en Ruby des dictionnaires de Python ou des *HashMap*s de
+Java] pour les noeuds et les liens de chaque graphe. J'ai utilisé le format
+[*GDF*](http://guess.wikispot.org/The_GUESS_.gdf_format) pour stocker les
+graphes, car c'est un format qui a l'avantage d'être peu verbeux (deux lignes
+plus une ligne par noeud ou lien) et facile à générer et à parser. Pour
+l'occasion, j'ai mis en ligne une gem^[paquet logiciel utilisé pour partager des
+modules en Ruby, équivalent des *eggs* de Python],
+[`graphs`](https://rubygems.org/gems/graphs), permettant de manipuler des
+graphes et de les stocker au format *GDF*.
