@@ -1,10 +1,14 @@
+/graphs
+Gephi/
+extractions/
 *~
 *.csv
 *.ods
 *.json
-/graphs
 *.gephi
-Gephi/
-extractions/
 *.swp
+*.aux
+*.toc
+*.out
+*.log
 rapport.pdf
