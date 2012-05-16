@@ -85,7 +85,7 @@ Méthodologie
 
 Durant tout le stage, j'ai utilisé des scripts en **Ruby** pour automatiser les
 tâches répétitives et/ou trop longues à faire à la main. J'ai aussi utilisé le
-logiciel [Gephi](https://gephi.org) pour visualiser les graphes.
+logiciel [**Gephi**](https://gephi.org) pour visualiser les graphes.
 
 Technique
 ---------
@@ -96,7 +96,48 @@ Java] pour les noeuds et les liens de chaque graphe. J'ai utilisé le format
 [*GDF*](http://guess.wikispot.org/The_GUESS_.gdf_format) pour stocker les
 graphes, car c'est un format qui a l'avantage d'être peu verbeux (deux lignes
 plus une ligne par noeud ou lien) et facile à générer et à parser. Pour
-l'occasion, j'ai mis en ligne une gem^[paquet logiciel utilisé pour partager des
-modules en Ruby, équivalent des *eggs* de Python],
-[`graphs`](https://rubygems.org/gems/graphs), permettant de manipuler des
-graphes et de les stocker au format *GDF*.
+l'occasion, j'ai mis en ligne une petite bibliothèque sous forme de gem^[paquet
+logiciel utilisé pour partager des modules en Ruby, équivalent des *eggs* de
+Python], [`graphs`](https://rubygems.org/gems/graphs), permettant de manipuler
+des graphes et de les stocker au format *GDF*.
+
+Première partie
+---------------
+
+Le principal obstacle pour la première partie était la limite horaire du nombre
+de requêtes à l'API de Twitter^[les requêtes sont limitées à 350 par heure pour
+une application authentifiée]. En effet, l'ensemble des graphes représente 7000
+utilisateurs uniques; récupérer les identifiants de leurs abonnés demande une
+requête par tranche de 50000^[seuls une vingtaine de comptes dépassaient ce
+seuil]. J'ai écris un script pour récupérer ces informations, et S. Raux m'a
+proposé de le faire tourner en continu sur un serveur chez
+[Linkfluence](http://fr.linkfluence.net/), ce qui a permis de récupérer les
+informations sous 48h. Le script générait un fichier par utilisateur listant ses
+abonnés. J'ai ensuite croisé ces listes avec les informations des graphes
+pré-existants pour générer les G_f.
+
+Seconde partie
+--------------
+
+Pour la seconde partie, j'ai dû rajouter des fonctions à ma petite bibliothèque
+afin de pouvoir faire de l'arithmétique sur les graphes : unions, intersections,
+*XOR*. Ainsi, générer l'intersection de deux graphes devenait aussi simple que
+la ligne de code suivante :
+    
+    GDF::load("graph1.gdf") & GDF::load("graph2.gdf")
+
+J'ai dû aussi gérer certains cas où les attributs des noeuds entre différents
+graphes n'étaient pas les mêmes, il fallait dans ce cas n'effectuer des
+comparaisons que sur les attributs communs des noeuds.
+
+En utilisant ces fonctions, j'ai pû générer des pourcentages de recouvrement
+entre certaines parties de graphes (par exemple la proportion de G_RT qui est
+dans G_0, ou la proportion de G_RT qui est dans G_f mais pas dans G_0, etc).
+
+Pour terminer, il a fallu calculer les taux d'explications possibles pour les
+*Retweets*. Par exemple, un *Retweet* peut avoir eu lieu parce que la personne
+qui a retweeté a déjà interragi avec la source du *Tweet*, dans ce cas, un lien
+de A vers B dans G_RT existe aussi dans G_0. Cela peut aussi être parce que A a
+déjà interragi avec quelqu'un qui a retweeté B, dans ce cas, il existe un voisin
+C de A dans G_0 pour lequel il y a un lien existant vers B dans G_0 et G_RT, ce
+dernier ayant eu lieu avant le *Retweet* de B effectué par A.
