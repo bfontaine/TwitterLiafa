@@ -1,0 +1,15 @@
+\documentclass[]{article}
+\usepackage{graphics,graphicx}
+\usepackage{pstricks,pst-node,pst-tree}
+\begin{document}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+&3\\
+1&&2
+\ncline{2,1}{2,3}
+\ncarc[arcangle=-30]{2,3}{1,2}
+\ncarc[arcangle=-30]{1,2}{2,1}
+\nccircle[nodesep=4pt]{->}{2,3}{.6cm}
+\endpsmatrix
+$
+\end{document}
