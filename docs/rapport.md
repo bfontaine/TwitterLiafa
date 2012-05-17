@@ -51,7 +51,8 @@ Retweet :
 G_0 :
 
 :	Graphe dont les noeuds sont les utilisateurs qui ont tweeté une URL donnée,
-	et les liens les interactions qu'ils ont eu entre eux.
+	et les liens les interactions qu'ils ont eu entre eux avant le début de la
+    diffusion de l'URL.
 
 G_f :
 
@@ -62,7 +63,8 @@ G_f :
 G_RT :
 
 :	Graphe des *Retweets*, *i.e.* dont chaque lien matérialise un *Retweet*; un
-	lien de A vers B indique que A a reweeté B.
+	lien de A vers B indique que A a reweeté B. Chacun de ces *Retweets*
+    contient l'URL étudiée.
 
 Objectifs
 =========
@@ -141,3 +143,25 @@ de A vers B dans G_RT existe aussi dans G_0. Cela peut aussi être parce que A a
 déjà interragi avec quelqu'un qui a retweeté B, dans ce cas, il existe un voisin
 C de A dans G_0 pour lequel il y a un lien existant vers B dans G_0 et G_RT, ce
 dernier ayant eu lieu avant le *Retweet* de B effectué par A.
+
+
+Résultats
+=========
+
+Différentes explications
+------------------------
+
+Quatre explications différentes pour un *Retweet* étaient envisagées :
+
+- l'utilisateur qui retweet a déjà interragi avec l'auteur du *Tweet* originel,
+  autrement dit il existe un lien direct dans G_0.
+- l'utilisateur qui retweet a déjà interragi avec quelqu'un qui a déjà retweeté
+  le même *Tweet*
+- l'utilisateur qui retweet suis l'auteur du *Tweet* originel, autrement dit il
+  existe un lien direct dans G_f.
+- l'utilisateur qui retweet suis quelqu'un qui a déjà retweeté le même *Tweet*
+
+Conclusion
+==========
+
+...
