@@ -22,9 +22,10 @@ rapport.%: rapport.md
 	pandoc ${PANDOC_OPTS} $< -o $@
 
 clean:
-	for e in aux dvi log out toc;do rm -f rapport.$$e;done
+	for e in aux log out toc;do rm -f *.$$e;done
 	rm -f *~
 	rm -f _rapport.tex
+	rm -f rapport.dvi
 
 cleanall:
 	for e in tex pdf;do rm -f rapport.$$e;done
