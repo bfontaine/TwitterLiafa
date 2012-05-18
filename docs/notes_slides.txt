@@ -1,0 +1,11 @@
+- def Twitter
+        - Twitter c'est quoi (1 slide: illustration)
+        - def Tweet (1 slide: screenshot d'un tweet)
+        - def Retweet (1 slide: screenshot d'un retweet du tweet précédent)
+
+- Objectifs
+- Données déjà collectées
+- Récupération des données manquantes (G_f) 
+- Aggrégations
+- Résultats
+- Conclusion
