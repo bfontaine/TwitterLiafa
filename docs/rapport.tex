@@ -1,0 +1,337 @@
+\documentclass[]{article}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{graphics,graphicx}
+\usepackage{pstricks,pst-node,pst-tree}
+\ifxetex
+  \usepackage{fontspec,xltxtra,xunicode}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex,
+              colorlinks=true,
+              linkcolor=blue]{hyperref}
+\else
+  \usepackage[unicode=true,
+              colorlinks=true,
+              linkcolor=blue]{hyperref}
+\fi
+\hypersetup{breaklinks=true, pdfborder={0 0 0}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\title{Rapport de stage}
+\author{Baptiste Fontaine}
+\date{18 mai 2012}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+Ce stage m'a été proposé par Christophe Prieur alors que je ne trouvais
+pas de matière pour valider mon UE libre\footnote{Unité d'Enseignement
+  hors cursus au choix, à suivre pendant un semestre}. Il s'est déroulé
+pendant la quasi-totalité du semestre, durée pendant laquelle j'ai
+principalement travaillé chez moi, avec un rendez-vous hebdomadaire avec
+C. Prieur pour avoir un suivi régulier. J'ai aussi pu travailler
+directement au LIAFA plusieurs fois pendant les vacances de Pâques.
+
+C. Prieur et Stéphane Raux étudient la façon dont interagissent les
+utilisateurs de \href{https://twitter.com/}{Twitter}, et cherchent à
+expliquer les motivations des utilisateurs qui ``retweetent''
+(\emph{i.e.} qui re-postent du contenu publié par d'autres utilisateurs,
+et donc qui contribuent à sa dissémination sur le réseau). Pour ce
+faire, ils ont extrait des ensembles d'utilisateurs du réseau en
+fonction d'une URL que chacun de ces utilisateurs avait ``tweeté''.
+Chacun de ces ensembles est décrit par plusieurs graphes --- $G_{0}$, $G_{f}$,
+$G_{RT}$ --- dont les définitions sont données plus loin.
+
+\subsection{Définitions}
+
+\begin{description}
+\item[Twitter :]
+Réseau social créé en 2006 sur lequel les utilisateurs peuvent publier
+de courts messages publics, et s'abonner aux messages d'autres
+utilisateurs. Ces messages sont appelés des ``\emph{Tweets}'', et
+``\emph{suivre}'' quelqu'un signifie être abonné à ses \emph{Tweets}.
+Lorsqu'un utilisateur poste un message à propos d'une information ou qui
+contient une URL, on dit qu'il \emph{tweet} cette information ou URL. Le
+site propose une API pour les développeurs, permettant de récupérer
+toutes les informations sur les \emph{Tweets} et les utilisateurs
+facilement. La version Web de Twitter est d'ailleurs basée sur sa propre
+API.
+
+\item[Retweet :]
+\emph{Tweet} d'un utilisateur qui est re-publié par un autre
+utilisateur, afin que ses abonnés voient le \emph{Tweet} originel. Le
+verbe associé est ``\emph{retweeter}''. Lorsqu'on \emph{retweet} le
+\emph{Retweet} d'un utilisateur, notre message est affiché comme étant
+le \emph{Retweet} du \emph{Tweet} originel. Ainsi, si l'utilisateur B
+retweet A, puis C retweet B, le \emph{Tweet} de C est affiché comme
+étant un \emph{Retweet} de A, sans mention de l'utilisateur B.
+
+\item[$G_{0}$ :]
+Graphe dont les noeuds sont les utilisateurs qui ont tweeté une URL
+donnée, et les liens les interactions\footnote{Une interaction est
+  matérialisée soit par un \emph{Retweet}, soit par la mention du nom
+  d'un autre utilisateur dans un \emph{Tweet}} qu'ils ont eu entre eux
+avant le début de la diffusion de l'URL. Dans les figures, un lien de
+$G_{0}$ sera représenté en rouge.
+
+\item[$G_{f}$ :]
+Graphe des abonnés (``\emph{followers}''), \emph{i.e.} dont chaque lien
+matérialise une relation d'abonnement sur le réseau; Un lien de A vers B
+indique que A suit B. Il est censé représenter les liens d'abonnements
+entre les utilisateurs avant le début de la diffusion de l'URL\footnote{Les
+  données relatives aux abonnements ont en fait été collectée après.}.
+Dans les figures, un lien de $G_{f}$ est représenté en bleu.
+
+\item[$G_{RT}$ :]
+Graphe des \emph{Retweets}, \emph{i.e.} dont chaque lien matérialise un
+\emph{Retweet}; un lien de A vers B indique que A a reweeté B. Chacun de
+ces \emph{Retweets} contient l'URL étudiée. Dans les figures, un lien de
+$G_{RT}$ est représenté en noir.
+
+\end{description}
+\section{Objectifs}
+
+Lorsque j'ai commencé le stage, S. Raux avait déjà extrait les
+informations pour 124 ensembles d'utilisateurs. Pour chacun de ces
+ensembles était disponibles un fichier de graphe $G_{0}$ et deux fichiers
+au format JSON, l'un étant simplement le résultat de la recherche
+effectuée sur une URL via l'API, l'autre une liste datée des
+\emph{Retweets} entre ces utilisateurs, permettant de construire $G_{RT}$.
+
+Mes objectifs étaient les suivants :
+
+\begin{itemize}
+\item
+  Dans une première partie, récupérer les informations concernant les
+  abonnements des utilisateurs, afin de générer les $G_{f}$.
+\item
+  Dans une seconde partie, extraire des informations chiffrées sur les
+  graphes générés, afin de permettre une étude statistique de ceux-ci.
+\end{itemize}
+\section{Méthodologie}
+
+Durant tout le stage, j'ai utilisé des scripts en \textbf{Ruby} pour
+automatiser les tâches répétitives et/ou trop longues à faire à la main.
+J'ai aussi utilisé le logiciel \href{https://gephi.org}{\textbf{Gephi}}
+pour visualiser les graphes, et \textbf{R} pour les statistiques.
+
+\subsection{Technique}
+
+Afin de représenter des graphes simplement, j'ai utilisé des listes de
+\emph{hashs}\footnote{équivalent en Ruby des dictionnaires de Python ou
+  des \emph{HashMap}s de Java} pour les noeuds et les liens de chaque
+graphe. J'ai utilisé le format
+\href{http://guess.wikispot.org/The\_GUESS\_.gdf\_format}{\emph{GDF}}
+pour stocker les graphes, car c'est un format qui a l'avantage d'être
+peu verbeux (deux lignes plus une ligne par noeud ou lien) et facile à
+générer et à parser. Pour l'occasion, j'ai mis en ligne une petite
+bibliothèque sous forme de gem\footnote{paquet logiciel utilisé pour
+  partager des modules en Ruby, équivalent des \emph{eggs} de Python},
+\href{https://rubygems.org/gems/graphs}{\texttt{graphs}}, permettant de
+manipuler des graphes et de les stocker au format \emph{GDF}.
+
+\subsection{Première partie}
+
+Le principal obstacle pour la première partie était la limite horaire du
+nombre de requêtes à l'API de Twitter\footnote{les requêtes sont
+  limitées à 350 par heure pour une application authentifiée}. En effet,
+l'ensemble des graphes représente 7000 utilisateurs uniques; récupérer
+les identifiants de leurs abonnés demande une requête par tranche de
+50000\footnote{seuls une vingtaine de comptes dépassaient ce seuil}.
+J'ai écris un script pour récupérer ces informations, et S. Raux m'a
+proposé de le faire tourner en continu sur un serveur chez
+\href{http://fr.linkfluence.net/}{Linkfluence}, ce qui a permis de
+récupérer les informations sous 48h. Le script générait un fichier par
+utilisateur listant ses abonnés. J'ai ensuite croisé ces listes avec les
+informations des graphes pré-existants pour générer les $G_{f}$.
+
+\subsection{Seconde partie}
+
+Pour la seconde partie, j'ai dû rajouter des fonctions à ma petite
+bibliothèque afin de pouvoir faire de l'arithmétique sur les graphes :
+unions, intersections, \emph{XOR}. Ainsi, générer l'intersection de deux
+graphes devenait aussi simple que la ligne de code suivante :
+
+\begin{verbatim}
+GDF::load("graph1.gdf") & GDF::load("graph2.gdf")
+\end{verbatim}
+J'ai dû aussi gérer certains cas où les attributs des noeuds entre
+différents graphes n'étaient pas les mêmes, il fallait dans ce cas
+n'effectuer des comparaisons que sur les attributs communs des noeuds.
+
+En utilisant ces fonctions, j'ai pû générer des pourcentages de
+recouvrement entre certaines parties de graphes (par exemple la
+proportion de $G_{RT}$ qui est dans $G_{0}$, ou la proportion de $G_{RT}$ qui est
+dans $G_{f}$ mais pas dans $G_{0}$, etc).
+
+Pour terminer, il a fallu calculer les taux d'explications possibles
+pour les \emph{Retweets}. Par exemple, un \emph{Retweet} peut avoir eu
+lieu parce que la personne qui a retweeté a déjà interragi avec la
+source du \emph{Tweet}, dans ce cas, un lien de A vers B dans $G_{RT}$
+existe aussi dans $G_{0}$. Cela peut aussi être parce que A a déjà
+interragi avec quelqu'un qui a retweeté B, dans ce cas, il existe un
+voisin C de A dans $G_{0}$ pour lequel il y a un lien existant vers B dans
+$G_{0}$ et $G_{RT}$, ce dernier ayant eu lieu avant le \emph{Retweet} de B
+effectué par A.
+
+\section{Résultats}
+
+L'ensemble des chiffres donnés ici concernent un ensemble de 124
+graphes\footnote{Chaque graphe étant un ensemble d'utilisateurs qui ont
+  tweeté une URL donnée. Les graphes existent en trois variantes: $G_{0}$,
+  $G_{f}$ et $G_{RT}$.}, 7215 utilisateurs uniques, et 9947 \emph{Tweets}
+(dont 4446 \emph{Retweets}).
+
+\subsection{Différentes explications}
+
+Quatre explications différentes pour un \emph{Retweet} étaient
+envisagées :
+
+\begin{itemize}
+\item
+  l'utilisateur qui retweet a déjà interragi avec l'auteur du
+  \emph{Tweet} originel, autrement dit il existe un lien direct dans
+  $G_{0}$.
+\begin{figure}[!h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+A&B
+\ncline{->}{1,1}{1,2}
+\ncarc[arcangle=20,linecolor=red,linewidth=2pt]{->}{1,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 1}
+\end{figure}
+\item
+  l'utilisateur qui retweet a déjà interragi avec quelqu'un qui a déjà
+  retweeté le même \emph{Tweet}
+\begin{figure}[!h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+&C\\
+A&&B
+\ncline{->}{2,1}{2,3}
+\ncarc[arcangle=20,linewidth=2pt]{->}{1,2}{2,3}
+\ncarc[arcangle=20,linecolor=red,linewidth=2pt]{->}{2,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 2}
+\end{figure}
+\item
+  l'utilisateur qui retweet suis l'auteur du \emph{Tweet} originel,
+  autrement dit il existe un lien direct dans $G_{f}$.
+\begin{figure}[!h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+A&B
+\ncline{->}{1,1}{1,2}
+\ncarc[arcangle=20,linecolor=blue,linewidth=2pt]{->}{1,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 3}
+\end{figure}
+\item
+  l'utilisateur qui retweet suis quelqu'un qui a déjà retweeté le même
+  \emph{Tweet}
+\begin{figure}[!h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+&C\\
+A&&B
+\ncline{->}{2,1}{2,3}
+\ncarc[arcangle=20,linewidth=2pt]{->}{1,2}{2,3}
+\ncarc[arcangle=20,linecolor=blue,linewidth=2pt]{->}{2,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 4}
+\end{figure}
+\end{itemize}
+Les différents scénarios explicatifs ont été étudiés indépendamment les
+uns des autres.
+
+\subsection{Premier scénario}
+
+Dans le premier scénario, un utilisateur retweet quelqu'un avec qui il a
+déjà interragi. C'est celui le plus souvent rencontré; en moyenne,
+70.8\% des \emph{Retweets} sont issus de personnes qui avaient déjà
+interragi avec l'auteur du \emph{Tweet}. La médiane est à 72.2\%, le
+premier quartile à 60.2\% et le troisième à 82.8\%.
+
+\subsection{Second scénario}
+
+Dans le second scénario, un utilisateur A a déjà interragi avec un
+autre, B, qui a retweeté l'auteur du tweet originel, C; A n'a pas eu
+d'interaction directe avec C. On explique donc son \emph{Retweet} par le
+fait qu'il a vu le \emph{Retweet} de B avant. En moyenne, 24.9\% des
+\emph{Retweets} sont expliqués par ce scénario. La médiane est à 17.1\%,
+les premier et troisième quartiles à 5.5\% et 41.6\% respectivement.
+
+\subsection{Troisième scénario}
+
+Le troisième scénario est similaire au premier, sauf qu'ici, on
+n'explique pas le \emph{Retweet} par une interaction mais par un
+abonnement : A retweet B parce qu'il est abonné à ses \emph{Tweets}. En
+moyenne, 42.3\% des \emph{Retweets} sont expliqués par ce scénario. La
+médiane est à 41.5\%, les premier et troisième quartiles à 11.5\% et
+72.0\% respectivement.
+
+\subsection{Quatrième scénario}
+
+Le quatrième scénario est similaire au premier, sauf que, comme dans le
+troisième, on n'explique pas ici le \emph{Retweet} par une interaction
+mais par un abonnement : A est abonné à B mais pas à C, B retweet C
+\emph{puis} A retweet C \emph{via} B. A a donc vu le \emph{Tweet}
+originel de C retweeté par B auquel il est abonné, avant de lui-même le
+retweeter. Ce scénario explique 13.2\% des \emph{Retweets} en moyenne.
+La médiane est à 7.1\%, les premier et troisième quartiles à 0\% et
+17.6\% respectivement.
+
+\subsection{Résumé}
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{|c|r|r|r|r|}
+\hline
+Scénario&premier quartile&médiane&moyenne&troisième quartile\\
+\hline
+1&60.28\%&72.22\%&70.85\%&82.85\%\\
+\hline
+2&5.56\%&17.16\%&24.96\%&41.66\%\\
+\hline
+3&11.50\%&41.50\%&42.29\%&72.06\%\\
+\hline
+4&0.00\%&7.14\%&13.23\%&17.68\%\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Résumé des explications}
+\end{figure}
+\section{Conclusion}
+
+\ldots{}
+
+\end{document}
