@@ -14,10 +14,10 @@ _cols = ['G0 & GRT', 'Gf & GRT', 'G0 & Gf & GRT']
 cols = ['"numéro"', '"taille de G0 (noeuds)"', '"taille de G0 (liens)"']
 
 _cols.each { |c|
-    cols << "\"#{c} (recouvrement GRT (liens))\""
+    cols << "\"#{c} (recouvrement GRT)\""
 }
 
-cols << '"Gf & GRT & ~G0 (recouvrement GRT (liens))"'
+cols << '"Gf & GRT & ~G0 (recouvrement GRT"'
 cols << '"Domaine de l\'URL"'
 cols << '"Sujet"'
 cols << '"URL"'
@@ -113,7 +113,6 @@ topics_kw = {
 
     gf_and_grt = percent(gi_f_rt.edges.length, grt.edges.length)
     gf_and_grt_and_g0 = percent(gi_0_f_rt.edges.length, grt.edges.length)
-
 
     cols = [n,                                               # id du graph
             g0.nodes.length,                                 # nombre de noeuds
