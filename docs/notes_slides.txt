@@ -1,11 +1,50 @@
+- Introduction/Présentation
+
 - def Twitter
         - Twitter c'est quoi (1 slide: illustration)
         - def Tweet (1 slide: screenshot d'un tweet)
         - def Retweet (1 slide: screenshot d'un retweet du tweet précédent)
+            - fonctionnement des RT (2-3 slides, schémas)
+                * pas possible de voir le cheminement d'un RT, etc
 
 - Objectifs
-- Données déjà collectées
-- Récupération des données manquantes (G_f) 
+        - Expliquer les RT
+            - 4 Explications possibles (schémas)
+            - Utilisation d'URL pour suivre les RT
+
+- Données
+        - déjà collectées
+            - Graphs préexistants (G_0)
+            - RTs (JSON)
+
+        - Récupération des données manquantes (G_f) 
+                - def API de Twitter
+                    * 1 slide avec une URL d'exemple (paramètres en gras) et retour en pretty JSON
+                - utilisation de l'API Twitter
+                    * schéma [Ruby]--(OAuth)--> Twitter --> réponse.json
+                - utilisation des réponses pour générer les graphes en Ruby
+
 - Aggrégations
+        - intersections de graphes (schémas)
+
 - Résultats
+        - répartitions des explications
+            -> 4 slides, 1 par explication, avec à chaque fois les précédentes en filigrane
+            -> +1 slide de résumé
+
 - Conclusion
+    -> écrire la conclusion du doc PDF et s'en inspirer
+
+
+- Questions (juste une illustration avec "Questions ?")
+
+----
+Illustrations possibles:
+
+    Twitter: http://www.istockphoto.com/stock-illustration-20258262-j.php
+        Tweet: TODO trouver [et faire un screenshot d']un Tweet amusant
+
+    Questions: http://www.istockphoto.com/stock-photo-17437699-j.php
+               http://www.istockphoto.com/stock-photo-9311779-j.php
+
+TODO: voir sur Flickr aussi
