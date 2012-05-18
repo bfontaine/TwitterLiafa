@@ -3,14 +3,79 @@
 \usepackage{pstricks,pst-node,pst-tree}
 \begin{document}
 % Use latex, then dvi2ps, then ps2pdf
+\begin{figure}[h]
+\begin{center}
 $
 \psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
-&3\\
-1&&2
-\ncline{2,1}{2,3}
-\ncarc[arcangle=-30]{2,3}{1,2}
-\ncarc[arcangle=-30]{1,2}{2,1}
-\nccircle[nodesep=4pt]{->}{2,3}{.6cm}
+A&B
+\ncline{->}{1,1}{1,2}
+\ncarc[arcangle=20,linecolor=red,linewidth=2pt]{->}{1,1}{1,2}
 \endpsmatrix
 $
+\end{center}
+\caption{Explication 1}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+&C\\
+A&&B
+\ncline{->}{2,1}{2,3}
+\ncarc[arcangle=20,linewidth=2pt]{->}{1,2}{2,3}
+\ncarc[arcangle=20,linecolor=red,linewidth=2pt]{->}{2,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 2}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+A&B
+\ncline{->}{1,1}{1,2}
+\ncarc[arcangle=20,linecolor=blue,linewidth=2pt]{->}{1,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 3}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+$
+\psmatrix[colsep=1.5cm,rowsep=1.5cm,mnode=circle]
+&C\\
+A&&B
+\ncline{->}{2,1}{2,3}
+\ncarc[arcangle=20,linewidth=2pt]{->}{1,2}{2,3}
+\ncarc[arcangle=20,linecolor=blue,linewidth=2pt]{->}{2,1}{1,2}
+\endpsmatrix
+$
+\end{center}
+\caption{Explication 4}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+Scénario&premier quartile&médiane&moyenne&troisième quartile\\
+\hline
+1&60.28\%&72.22\%&70.85\%&82.85\%\\
+\hline
+2&5.56\%&17.16\%&24.96\%&41.66\%\\
+\hline
+3&11.50\%&41.50\%&42.29\%&72.06\%\\
+\hline
+4&0.00\%&7.14\%&13.23\%&17.68\%\\
+\hline
+
+\end{tabular}
+\end{center}
+\caption{Résumé des explications}
+\end{figure}
 \end{document}
