@@ -51,20 +51,26 @@ Retweet :
 G_0 :
 
 :	Graphe dont les noeuds sont les utilisateurs qui ont tweeté une URL donnée,
-	et les liens les interactions qu'ils ont eu entre eux avant le début de la
-    diffusion de l'URL.
+	et les liens les interactions^[Une interaction est matérialisée soit par un
+    *Retweet*, soit par la mention du nom d'un autre utilisateur dans un *Tweet*]
+    qu'ils ont eu entre eux avant le début de la diffusion de l'URL. Dans les
+    figures, un lien de G_0 sera représenté en rouge.
 
 G_f :
 
 :	Graphe des abonnés ("*followers*"), *i.e.* dont chaque lien matérialise une
 	relation d'abonnement sur le réseau; Un lien de A vers B indique que A suit
-    B.
+    B. Il est censé représenter les liens d'abonnements entre les utilisateurs
+    avant le début de la diffusion de l'URL^[Les données relatives aux
+    abonnements ont en fait été collectée après.]. Dans les figures, un lien de
+    G_f est représenté en bleu.
 
 G_RT :
 
 :	Graphe des *Retweets*, *i.e.* dont chaque lien matérialise un *Retweet*; un
 	lien de A vers B indique que A a reweeté B. Chacun de ces *Retweets*
-    contient l'URL étudiée.
+    contient l'URL étudiée. Dans les figures, un lien de G_RT est représenté en
+    noir.
 
 Objectifs
 =========
@@ -87,7 +93,8 @@ Méthodologie
 
 Durant tout le stage, j'ai utilisé des scripts en **Ruby** pour automatiser les
 tâches répétitives et/ou trop longues à faire à la main. J'ai aussi utilisé le
-logiciel [**Gephi**](https://gephi.org) pour visualiser les graphes.
+logiciel [**Gephi**](https://gephi.org) pour visualiser les graphes, et **R**
+pour les statistiques.
 
 Technique
 ---------
@@ -148,6 +155,11 @@ dernier ayant eu lieu avant le *Retweet* de B effectué par A.
 Résultats
 =========
 
+L'ensemble des chiffres donnés ici concernent un ensemble de 124
+graphes^[Chaque graphe étant un ensemble d'utilisateurs qui ont tweeté une URL
+donnée. Les graphes existent en trois variantes: G_0, G_f et G_RT.], 7215
+utilisateurs uniques, et 9947 *Tweets* (dont 4446 *Retweets*).
+
 Différentes explications
 ------------------------
 
@@ -160,6 +172,53 @@ Quatre explications différentes pour un *Retweet* étaient envisagées :
 - l'utilisateur qui retweet suis l'auteur du *Tweet* originel, autrement dit il
   existe un lien direct dans G_f.
 - l'utilisateur qui retweet suis quelqu'un qui a déjà retweeté le même *Tweet*
+
+Les différents scénarios explicatifs ont été étudiés indépendamment les uns des
+autres.
+
+Premier scénario
+----------------
+
+Dans le premier scénario, un utilisateur retweet quelqu'un avec qui il a déjà
+interragi. C'est celui le plus souvent rencontré; en moyenne, 70.8% des
+*Retweets* sont issus de personnes qui avaient déjà interragi avec l'auteur du
+*Tweet*. La médiane est à 72.2%, le premier quartile à 60.2% et le troisième à
+82.8%.
+
+Second scénario
+---------------
+
+Dans le second scénario, un utilisateur A a déjà interragi avec un autre, B, qui a
+retweeté l'auteur du tweet originel, C; A n'a pas eu
+d'interaction directe avec C. On explique donc son *Retweet* par le
+fait qu'il a vu le *Retweet* de B avant. En moyenne, 24.9% des *Retweets* sont
+expliqués par ce scénario. La médiane est à 17.1%, les premier et troisième
+quartiles à 5.5% et 41.6% respectivement.
+
+Troisième scénario
+------------------
+
+Le troisième scénario est similaire au premier, sauf qu'ici, on n'explique pas
+le *Retweet* par une interaction mais par un abonnement : A retweet B parce
+qu'il est abonné à ses *Tweets*. En moyenne, 42.3% des *Retweets* sont expliqués
+par ce scénario. La médiane est à 41.5%, les premier et troisième quartiles à
+11.5% et 72.0% respectivement.
+
+Quatrième scénario
+------------------
+
+Le quatrième scénario est similaire au premier, sauf que, comme dans le
+troisième, on n'explique pas ici le *Retweet* par une interaction mais par un
+abonnement : A est abonné à B mais pas à C, B retweet C *puis* A retweet C *via*
+B. A a donc vu le *Tweet* originel de C retweeté par B auquel il est abonné,
+avant de lui-même le retweeter. Ce scénario explique 13.2% des *Retweets* en
+moyenne. La médiane est à 7.1%, les premier et troisième quartiles à 0% et 17.6%
+respectivement.
+
+Résumé
+------
+
+<tableau>
 
 Conclusion
 ==========
