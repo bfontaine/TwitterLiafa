@@ -39,12 +39,4 @@
 - Questions (juste une illustration avec "Questions ?")
 
 ----
-Illustrations possibles:
-
-    Twitter: http://www.istockphoto.com/stock-illustration-20258262-j.php
-        Tweet: TODO trouver [et faire un screenshot d']un Tweet amusant
-
-    Questions: http://www.istockphoto.com/stock-photo-17437699-j.php
-               http://www.istockphoto.com/stock-photo-9311779-j.php
-
-TODO: voir sur Flickr aussi
+TODO: voir sur Flickr pour les illustrations
