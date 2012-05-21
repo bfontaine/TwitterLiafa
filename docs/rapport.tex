@@ -311,7 +311,7 @@ $
 Les différents scénarios explicatifs ont été étudiés indépendamment les
 uns des autres.
 
-\subsubsection{Premier scénario}
+\subsubsection{Interaction préexistante}
 
 Dans le premier scénario, un utilisateur retweet quelqu'un avec qui il a
 déjà interagi\footnote{Ce qui correspond à un recouvrement entre $G_0$
@@ -320,7 +320,7 @@ et $G_{RT}$}. C'est celui le plus souvent rencontré; en moyenne,
 interagi avec l'auteur du \emph{Tweet}. La médiane est à 72.2\%, le
 premier quartile à 60.2\% et le troisième à 82.8\%.
 
-\subsubsection{Deuxième scénario}
+\subsubsection{Interaction indirecte}
 
 Dans le deuxième scénario, un utilisateur A a déjà interagi avec un
 autre, B, qui a retweeté l'auteur du tweet originel, C; A n'a pas eu
@@ -329,7 +329,7 @@ fait qu'il a vu le \emph{Retweet} de B avant. En moyenne, 24.9\% des
 \emph{Retweets} sont expliqués par ce scénario. La médiane est à 17.1\%,
 les premier et troisième quartiles à 5.5\% et 41.6\% respectivement.
 
-\subsubsection{Troisième scénario}
+\subsubsection{Abonnement préexistant}
 
 Le troisième scénario est similaire au premier, sauf qu'ici, on
 n'explique pas le \emph{Retweet} par une interaction mais par un
@@ -338,7 +338,7 @@ moyenne, 42.3\% des \emph{Retweets} sont expliqués par ce scénario. La
 médiane est à 41.5\%, les premier et troisième quartiles à 11.5\% et
 72.0\% respectivement.
 
-\subsubsection{Quatrième scénario}
+\subsubsection{Abonnement indirect}
 
 Le quatrième scénario est similaire au premier, sauf que, comme dans le
 troisième, on n'explique pas ici le \emph{Retweet} par une interaction
@@ -354,17 +354,17 @@ La médiane est à 7.1\%, les premier et troisième quartiles à 0\% et
 
 \begin{figure}[h]
 \begin{center}
-\begin{tabular}{|c|r|r|r|r|}
+\begin{tabular}{|l|r|r|r|r|}
 \hline
 Scénario&premier quartile&médiane&moyenne&troisième quartile\\
 \hline
-1&60.28\%&72.22\%&70.85\%&82.85\%\\
+Interaction préexistante&60.28\%&72.22\%&70.85\%&82.85\%\\
 \hline
-2&5.56\%&17.16\%&24.96\%&41.66\%\\
+Interaction indirecte&5.56\%&17.16\%&24.96\%&41.66\%\\
 \hline
-3&11.50\%&41.50\%&42.29\%&72.06\%\\
+Abonnement préexistant&11.50\%&41.50\%&42.29\%&72.06\%\\
 \hline
-4&0.00\%&7.14\%&13.23\%&17.68\%\\
+Abonnement indirect&0.00\%&7.14\%&13.23\%&17.68\%\\
 \hline
 \end{tabular}
 \end{center}
@@ -376,7 +376,7 @@ Ce stage m'a permis de mettre en pratique les connaissances apprises en cours
 ou par moi-même\footnote{Le langage Ruby, par exemple}, de façon autonome,
 et avec la présentation de résultats. Il m'a permis de travailler avec des
 graphes, ce qui est (entre autres) l'objet du cours d'algorithmique en L3,
-que je suivrais l'année prochaine. J'ai aussi pu avoir un aperçu de ce que
+que je suivrai l'année prochaine. J'ai aussi pu avoir un aperçu de ce que
 peut être la recherche en informatique.
 
 \end{document}
