@@ -1,6 +1,5 @@
 /graphs
 Gephi/
-extractions/
 *~
 *.csv
 *.ods
@@ -13,3 +12,4 @@ extractions/
 *.log
 _rapport.tex
 *.png
+tokens.yml

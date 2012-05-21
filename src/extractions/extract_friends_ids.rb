@@ -1,15 +1,13 @@
 #! /usr/bin/ruby1.9.1
 
 # gem install 'twitter'
+require 'yaml'
 require 'twitter'
 require 'json'
 
 # -- CONFIG --
 client = Twitter::Client.new(
-    :consumer_key =>       'fgnXdqtGNVjc3GvEPpaipA',
-    :consumer_secret =>    'lC7M4xwqbsGU76lrCCqBfzBwRppO4ol6nf034RVhg',
-    :oauth_token =>        '18565111-jKjGzW0MlurKHfJ1WhWiov7wgHBvwsX9IJzwKtVb7',
-    :oauth_token_secret => 'U8UpDmAMnT4lVo3SnEY4W2Xt2XozMaGF6OwWAk4KQTw'
+    YAML.load(File.read("tokens.yml"))
 )
 Output_dir = './friends_ids'
 # -- ////// --
