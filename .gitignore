@@ -11,6 +11,5 @@ extractions/
 *.toc
 *.out
 *.log
-rapport.pdf
 _rapport.tex
 *.png

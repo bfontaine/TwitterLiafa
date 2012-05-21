@@ -1,4 +1,7 @@
 \documentclass[]{article}
+
+\usepackage[francais]{babel}
+
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{graphics,graphicx}
@@ -14,17 +17,17 @@
     \usepackage[utf8]{inputenc}
   \fi
 \fi
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex,
-              colorlinks=true,
-              linkcolor=blue]{hyperref}
-\else
+%\ifxetex
+%  \usepackage[setpagesize=false, % page size defined by xetex
+%              unicode=false, % unicode breaks when used with xetex
+%              xetex,
+%              colorlinks=true,
+%              linkcolor=blue]{hyperref}
+%\else
   \usepackage[unicode=true,
               colorlinks=true,
               linkcolor=blue]{hyperref}
-\fi
+%\fi
 \hypersetup{breaklinks=true, pdfborder={0 0 0}}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
@@ -33,11 +36,12 @@
 
 \title{Rapport de stage}
 \author{Baptiste Fontaine}
-\date{18 mai 2012}
+\date{21 mai 2012}
 
 \begin{document}
 \maketitle
-
+\tableofcontents
+\newpage
 \section{Introduction}
 
 Ce stage m'a été proposé par Christophe Prieur alors que je ne trouvais
@@ -144,7 +148,8 @@ générer et à parser. Pour l'occasion, j'ai mis en ligne une petite
 bibliothèque sous forme de gem\footnote{paquet logiciel utilisé pour
  partager des modules en Ruby, équivalent des \emph{eggs} de Python},
 \href{https://rubygems.org/gems/graphs}{\texttt{graphs}}, permettant de
-manipuler des graphes et de les stocker au format \emph{GDF}.
+manipuler des graphes et de les stocker au format \emph{GDF}\footnote{La
+\emph{gem} a été téléchargée plus de 400 fois depuis sa mise en ligne}.
 
 \subsection{Première partie}
 
@@ -167,7 +172,6 @@ Pour la seconde partie, j'ai dû rajouter des fonctions à ma petite
 bibliothèque afin de pouvoir faire de l'arithmétique sur les graphes :
 unions, intersections, \emph{XOR}. Ainsi, générer l'intersection de deux
 graphes devenait aussi simple que la ligne de code suivante :
-
 \begin{verbatim}
 GDF::load("graph1.gdf") & GDF::load("graph2.gdf")
 \end{verbatim}
@@ -182,13 +186,12 @@ dans $G_{f}$ mais pas dans $G_{0}$, etc).
 
 Pour terminer, il a fallu calculer les taux d'explications possibles
 pour les \emph{Retweets}. Par exemple, un \emph{Retweet} peut avoir eu
-lieu parce que la personne qui a retweeté a déjà interragi avec la
+lieu parce que la personne qui a retweeté a déjà interagi avec la
 source du \emph{Tweet}, dans ce cas, un lien de A vers B dans $G_{RT}$
 existe aussi dans $G_{0}$. Cela peut aussi être parce que A a déjà 
-interragi avec quelqu'un qui a retweeté B, dans ce cas, il existe un
-voisin C de A dans $G_{0}$ pour lequel il y a un lien existant vers B dans
-$G_{0}$ et $G_{RT}$, ce dernier ayant eu lieu avant le \emph{Retweet} de B
-effectué par A.
+interagi avec quelqu'un qui a retweeté B auparavant, ou parce que A
+suit B tout simplement, ou encore parce que A suit quelqu'un qui a retweeté
+B auparavant.
 
 \section{Résultats}
 
@@ -198,14 +201,49 @@ graphes\footnote{Chaque graphe étant un ensemble d'utilisateurs qui ont
  $G_{f}$ et $G_{RT}$.}, 7215 utilisateurs uniques, et 9947 \emph{Tweets}
 (dont 4446 \emph{Retweets}).
 
-\subsection{Différentes explications}
+\subsection{Recouvrements}
+
+Pour chaque graphe, quatre intersections ont été calculées, avec à chaque fois
+le taux de recouvrement par rapport à $G_{RT}$.
+
+\begin{figure}[!h]
+\begin{center}
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+Intersection&\multicolumn{4}{c|}{Taux de recouvrement par rapport à $G_{RT}$}\\
+\hline
+&premier quartile&médiane&moyenne&troisième quartile\\
+\hline
+$G_0$ et $G_{RT}$ & 60.28\% & 72.22\% & 70.85\% & 82.85\%\\
+\hline
+$G_f$ et $G_{RT}$ & 11.50\% & 41.50\% & 42.29\% & 72.06\%\\
+\hline
+$G_0$ et $G_f$ et $G_{RT}$ & 7.55\% & 34.74\% & 34.28\% & 56.73\%\\
+\hline
+$G_f$ et $G_{RT}$ sans $G_0$ & 0\% & 4.37\% & 8.00\% & 12.33\%\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Taux de recouvrement des graphs}
+\end{figure}
+
+On remarque ainsi que $70.85\%$\footnote{En moyenne} des \emph{Retweets} sont
+faits par des gens qui avaient déjà interagi avec l'auteur du \emph{Tweet},
+mais que seulement $41.5\%$\footnote{idem} sont issus de personnes abonnées
+à celui-ci, ce qui montre bien qu'il y a eu une dissémination du \emph{Tweet}
+originel sur le réseau, en dehors de ses propres abonnés. Le faible taux de
+recouvrement entre $G_f$ et $G_{RT}$ sans $G_0$ ($8\%$ en moyenne) confirme que
+très peu de \emph{Retweets} sont fait par des gens qui suivent mais n'avaient
+pas interagi avec l'auteur du \emph{Tweet}.
+
+\subsection{Différentes explications possibles}
 
 Quatre explications différentes pour un \emph{Retweet} étaient
 envisagées :
 
 \begin{itemize}
 \item
- l'utilisateur qui retweet a déjà interragi avec l'auteur du
+ l'utilisateur qui retweet a déjà interagi avec l'auteur du
  \emph{Tweet} originel, autrement dit il existe un lien direct dans
  $G_{0}$.
 \begin{figure}[!h]
@@ -221,8 +259,8 @@ $
 \caption{Explication 1}
 \end{figure}
 \item
- l'utilisateur qui retweet a déjà interragi avec quelqu'un qui a déjà 
- retweeté le même \emph{Tweet}
+ l'utilisateur qui retweet a déjà interagi avec quelqu'un qui a déjà 
+ retweeté le même \emph{Tweet}, mais n'a jamais interagi avec l'auteur originel.
 \begin{figure}[!h]
 \begin{center}
 $
@@ -254,7 +292,7 @@ $
 \end{figure}
 \item
  l'utilisateur qui retweet suis quelqu'un qui a déjà retweeté le même
- \emph{Tweet}
+ \emph{Tweet}, mais ne suit pas l'auteur originel.
 \begin{figure}[!h]
 \begin{center}
 $
@@ -273,24 +311,25 @@ $
 Les différents scénarios explicatifs ont été étudiés indépendamment les
 uns des autres.
 
-\subsection{Premier scénario}
+\subsubsection{Premier scénario}
 
 Dans le premier scénario, un utilisateur retweet quelqu'un avec qui il a
-déjà interragi. C'est celui le plus souvent rencontré; en moyenne,
+déjà interagi\footnote{Ce qui correspond à un recouvrement entre $G_0$
+et $G_{RT}$}. C'est celui le plus souvent rencontré; en moyenne,
 70.8\% des \emph{Retweets} sont issus de personnes qui avaient déjà 
-interragi avec l'auteur du \emph{Tweet}. La médiane est à 72.2\%, le
+interagi avec l'auteur du \emph{Tweet}. La médiane est à 72.2\%, le
 premier quartile à 60.2\% et le troisième à 82.8\%.
 
-\subsection{Second scénario}
+\subsubsection{Deuxième scénario}
 
-Dans le second scénario, un utilisateur A a déjà interragi avec un
+Dans le deuxième scénario, un utilisateur A a déjà interagi avec un
 autre, B, qui a retweeté l'auteur du tweet originel, C; A n'a pas eu
 d'interaction directe avec C. On explique donc son \emph{Retweet} par le
 fait qu'il a vu le \emph{Retweet} de B avant. En moyenne, 24.9\% des
 \emph{Retweets} sont expliqués par ce scénario. La médiane est à 17.1\%,
 les premier et troisième quartiles à 5.5\% et 41.6\% respectivement.
 
-\subsection{Troisième scénario}
+\subsubsection{Troisième scénario}
 
 Le troisième scénario est similaire au premier, sauf qu'ici, on
 n'explique pas le \emph{Retweet} par une interaction mais par un
@@ -299,18 +338,19 @@ moyenne, 42.3\% des \emph{Retweets} sont expliqués par ce scénario. La
 médiane est à 41.5\%, les premier et troisième quartiles à 11.5\% et
 72.0\% respectivement.
 
-\subsection{Quatrième scénario}
+\subsubsection{Quatrième scénario}
 
 Le quatrième scénario est similaire au premier, sauf que, comme dans le
 troisième, on n'explique pas ici le \emph{Retweet} par une interaction
-mais par un abonnement : A est abonné à B mais pas à C, B retweet C
+mais par un abonnement\footnote{Ce qui correspond à un recouvrement entre $G_f$
+et $G_{RT}$} : A est abonné à B mais pas à C, B retweet C
 \emph{puis} A retweet C \emph{via} B. A a donc vu le \emph{Tweet}
 originel de C retweeté par B auquel il est abonné, avant de lui-même le
 retweeter. Ce scénario explique 13.2\% des \emph{Retweets} en moyenne.
 La médiane est à 7.1\%, les premier et troisième quartiles à 0\% et
 17.6\% respectivement.
 
-\subsection{Résumé}
+\subsubsection{Résumé}
 
 \begin{figure}[h]
 \begin{center}
@@ -332,6 +372,11 @@ Scénario&premier quartile&médiane&moyenne&troisième quartile\\
 \end{figure}
 \section{Conclusion}
 
-\ldots{}
+Ce stage m'a permis de mettre en pratique les connaissances apprises en cours
+ou par moi-même\footnote{Le langage Ruby, par exemple}, de façon autonome,
+et avec la présentation de résultats. Il m'a permis de travailler avec des
+graphes, ce qui est (entre autres) l'objet du cours d'algorithmique en L3,
+que je suivrais l'année prochaine. J'ai aussi pu avoir un aperçu de ce que
+peut être la recherche en informatique.
 
 \end{document}
