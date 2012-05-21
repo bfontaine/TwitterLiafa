@@ -42,14 +42,14 @@
 
 Ce stage m'a été proposé par Christophe Prieur alors que je ne trouvais
 pas de matière pour valider mon UE libre\footnote{Unité d'Enseignement
-  hors cursus au choix, à suivre pendant un semestre}. Il s'est déroulé
+ hors cursus au choix, à suivre pendant un semestre}. Il s'est déroulé
 pendant la quasi-totalité du semestre, durée pendant laquelle j'ai
 principalement travaillé chez moi, avec un rendez-vous hebdomadaire avec
 C. Prieur pour avoir un suivi régulier. J'ai aussi pu travailler
 directement au LIAFA plusieurs fois pendant les vacances de Pâques.
 
 C. Prieur et Stéphane Raux étudient la façon dont interagissent les
-utilisateurs de \href{https://twitter.com/}{Twitter}, et cherchent à
+utilisateurs de \href{https://twitter.com/}{Twitter}, et cherchent à 
 expliquer les motivations des utilisateurs qui ``retweetent''
 (\emph{i.e.} qui re-postent du contenu publié par d'autres utilisateurs,
 et donc qui contribuent à sa dissémination sur le réseau). Pour ce
@@ -85,8 +85,8 @@ retweet A, puis C retweet B, le \emph{Tweet} de C est affiché comme
 \item[$G_{0}$ :]
 Graphe dont les noeuds sont les utilisateurs qui ont tweeté une URL
 donnée, et les liens les interactions\footnote{Une interaction est
-  matérialisée soit par un \emph{Retweet}, soit par la mention du nom
-  d'un autre utilisateur dans un \emph{Tweet}} qu'ils ont eu entre eux
+ matérialisée soit par un \emph{Retweet}, soit par la mention du nom
+ d'un autre utilisateur dans un \emph{Tweet}} qu'ils ont eu entre eux
 avant le début de la diffusion de l'URL. Dans les figures, un lien de
 $G_{0}$ sera représenté en rouge.
 
@@ -95,7 +95,7 @@ Graphe des abonnés (``\emph{followers}''), \emph{i.e.} dont chaque lien
 matérialise une relation d'abonnement sur le réseau; Un lien de A vers B
 indique que A suit B. Il est censé représenter les liens d'abonnements
 entre les utilisateurs avant le début de la diffusion de l'URL\footnote{Les
-  données relatives aux abonnements ont en fait été collectée après.}.
+ données relatives aux abonnements ont en fait été collectée après.}.
 Dans les figures, un lien de $G_{f}$ est représenté en bleu.
 
 \item[$G_{RT}$ :]
@@ -118,11 +118,11 @@ Mes objectifs étaient les suivants :
 
 \begin{itemize}
 \item
-  Dans une première partie, récupérer les informations concernant les
-  abonnements des utilisateurs, afin de générer les $G_{f}$.
+ Dans une première partie, récupérer les informations concernant les
+ abonnements des utilisateurs, afin de générer les $G_{f}$.
 \item
-  Dans une seconde partie, extraire des informations chiffrées sur les
-  graphes générés, afin de permettre une étude statistique de ceux-ci.
+ Dans une seconde partie, extraire des informations chiffrées sur les
+ graphes générés, afin de permettre une étude statistique de ceux-ci.
 \end{itemize}
 \section{Méthodologie}
 
@@ -135,14 +135,14 @@ pour visualiser les graphes, et \textbf{R} pour les statistiques.
 
 Afin de représenter des graphes simplement, j'ai utilisé des listes de
 \emph{hashs}\footnote{équivalent en Ruby des dictionnaires de Python ou
-  des \emph{HashMap}s de Java} pour les noeuds et les liens de chaque
+ des \emph{HashMap}s de Java} pour les noeuds et les liens de chaque
 graphe. J'ai utilisé le format
 \href{http://guess.wikispot.org/The\_GUESS\_.gdf\_format}{\emph{GDF}}
 pour stocker les graphes, car c'est un format qui a l'avantage d'être
-peu verbeux (deux lignes plus une ligne par noeud ou lien) et facile à
+peu verbeux (deux lignes plus une ligne par noeud ou lien) et facile à 
 générer et à parser. Pour l'occasion, j'ai mis en ligne une petite
 bibliothèque sous forme de gem\footnote{paquet logiciel utilisé pour
-  partager des modules en Ruby, équivalent des \emph{eggs} de Python},
+ partager des modules en Ruby, équivalent des \emph{eggs} de Python},
 \href{https://rubygems.org/gems/graphs}{\texttt{graphs}}, permettant de
 manipuler des graphes et de les stocker au format \emph{GDF}.
 
@@ -150,7 +150,7 @@ manipuler des graphes et de les stocker au format \emph{GDF}.
 
 Le principal obstacle pour la première partie était la limite horaire du
 nombre de requêtes à l'API de Twitter\footnote{les requêtes sont
-  limitées à 350 par heure pour une application authentifiée}. En effet,
+ limitées à 350 par heure pour une application authentifiée}. En effet,
 l'ensemble des graphes représente 7000 utilisateurs uniques; récupérer
 les identifiants de leurs abonnés demande une requête par tranche de
 50000\footnote{seuls une vingtaine de comptes dépassaient ce seuil}.
@@ -184,7 +184,7 @@ Pour terminer, il a fallu calculer les taux d'explications possibles
 pour les \emph{Retweets}. Par exemple, un \emph{Retweet} peut avoir eu
 lieu parce que la personne qui a retweeté a déjà interragi avec la
 source du \emph{Tweet}, dans ce cas, un lien de A vers B dans $G_{RT}$
-existe aussi dans $G_{0}$. Cela peut aussi être parce que A a déjà
+existe aussi dans $G_{0}$. Cela peut aussi être parce que A a déjà 
 interragi avec quelqu'un qui a retweeté B, dans ce cas, il existe un
 voisin C de A dans $G_{0}$ pour lequel il y a un lien existant vers B dans
 $G_{0}$ et $G_{RT}$, ce dernier ayant eu lieu avant le \emph{Retweet} de B
@@ -194,8 +194,8 @@ effectué par A.
 
 L'ensemble des chiffres donnés ici concernent un ensemble de 124
 graphes\footnote{Chaque graphe étant un ensemble d'utilisateurs qui ont
-  tweeté une URL donnée. Les graphes existent en trois variantes: $G_{0}$,
-  $G_{f}$ et $G_{RT}$.}, 7215 utilisateurs uniques, et 9947 \emph{Tweets}
+ tweeté une URL donnée. Les graphes existent en trois variantes: $G_{0}$,
+ $G_{f}$ et $G_{RT}$.}, 7215 utilisateurs uniques, et 9947 \emph{Tweets}
 (dont 4446 \emph{Retweets}).
 
 \subsection{Différentes explications}
@@ -205,9 +205,9 @@ envisagées :
 
 \begin{itemize}
 \item
-  l'utilisateur qui retweet a déjà interragi avec l'auteur du
-  \emph{Tweet} originel, autrement dit il existe un lien direct dans
-  $G_{0}$.
+ l'utilisateur qui retweet a déjà interragi avec l'auteur du
+ \emph{Tweet} originel, autrement dit il existe un lien direct dans
+ $G_{0}$.
 \begin{figure}[!h]
 \begin{center}
 $
@@ -221,8 +221,8 @@ $
 \caption{Explication 1}
 \end{figure}
 \item
-  l'utilisateur qui retweet a déjà interragi avec quelqu'un qui a déjà
-  retweeté le même \emph{Tweet}
+ l'utilisateur qui retweet a déjà interragi avec quelqu'un qui a déjà 
+ retweeté le même \emph{Tweet}
 \begin{figure}[!h]
 \begin{center}
 $
@@ -238,8 +238,8 @@ $
 \caption{Explication 2}
 \end{figure}
 \item
-  l'utilisateur qui retweet suis l'auteur du \emph{Tweet} originel,
-  autrement dit il existe un lien direct dans $G_{f}$.
+ l'utilisateur qui retweet suis l'auteur du \emph{Tweet} originel,
+ autrement dit il existe un lien direct dans $G_{f}$.
 \begin{figure}[!h]
 \begin{center}
 $
@@ -253,8 +253,8 @@ $
 \caption{Explication 3}
 \end{figure}
 \item
-  l'utilisateur qui retweet suis quelqu'un qui a déjà retweeté le même
-  \emph{Tweet}
+ l'utilisateur qui retweet suis quelqu'un qui a déjà retweeté le même
+ \emph{Tweet}
 \begin{figure}[!h]
 \begin{center}
 $
@@ -277,7 +277,7 @@ uns des autres.
 
 Dans le premier scénario, un utilisateur retweet quelqu'un avec qui il a
 déjà interragi. C'est celui le plus souvent rencontré; en moyenne,
-70.8\% des \emph{Retweets} sont issus de personnes qui avaient déjà
+70.8\% des \emph{Retweets} sont issus de personnes qui avaient déjà 
 interragi avec l'auteur du \emph{Tweet}. La médiane est à 72.2\%, le
 premier quartile à 60.2\% et le troisième à 82.8\%.
 
