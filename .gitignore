@@ -1,7 +1,6 @@
 /graphs
 Gephi/
 *~
-*.csv
 *.ods
 *.json
 *.gephi
